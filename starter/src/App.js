@@ -6,23 +6,22 @@ import { BooksShelft } from "./components/BooksShelf";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
   const [books, setBooks] = useState([]);
+
   //  const [targetBook, setTargetBook] = useState([]);
   //  const targetShelf = "";
 
   useEffect(() => {
-    const searchBooks = () => {
+    const getAllBooks = () => {
       const books = async () => {
         const res = await BooksApi.getAll();
         setBooks(res);
       };
       books();
     };
-    searchBooks();
+    getAllBooks();
   }, []);
 
-  console.log(books);
   const handleTargetBookChange = (targetBook, shelf) => {
     let targetId = targetBook.id;
     const newBooks = books.map((book) => {
@@ -34,6 +33,7 @@ function App() {
         return book;
       }
     });
+    console.log(newBooks);
     setBooks(newBooks);
   };
 
@@ -42,6 +42,25 @@ function App() {
       const res = await BooksApi.update(targetBook, shelf);
     };
     updateTargetBook();
+  };
+
+  const addBook = (books, otherBooks) => {
+    otherBooks.filter((otherBook) => {
+      if (
+        ["currentlyreading", "wanttoread", "read"].includes(
+          otherBook.shelf.toLowerCase()
+        )
+      ) {
+        console.log(otherBook);
+        books.push(otherBook);
+        updateBook(otherBook, otherBook.shelf);
+      }
+    });
+    console.log("in onClick");
+    console.log(books);
+    console.log(otherBooks);
+
+    setBooks(books);
   };
 
   return (
@@ -54,6 +73,7 @@ function App() {
             <SearchPage
               books={books}
               handleTargetBookChange={handleTargetBookChange}
+              addBook={addBook}
             />
           }
         />

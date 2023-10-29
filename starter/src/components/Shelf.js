@@ -1,7 +1,13 @@
 import React from "react";
 import { Books } from "./Books";
 
-export const Shelf = ({ shelves, shelf, books, handleTargetBookChange }) => {
+export const Shelf = ({
+  shelves,
+  shelf,
+  books,
+  handleTargetSearchBookChange,
+  handleTargetBookChange,
+}) => {
   console.log(shelves);
   return (
     <div>
@@ -14,11 +20,13 @@ export const Shelf = ({ shelves, shelf, books, handleTargetBookChange }) => {
               bookShelf={shelf.shelf}
               books={books}
               handleTargetBookChange={handleTargetBookChange}
+              handleTargetSearchBookChange={handleTargetSearchBookChange}
             />
           ) : (
             <Books
               shelves={false}
               books={books}
+              handleTargetSearchBookChange={handleTargetSearchBookChange}
               handleTargetBookChange={handleTargetBookChange}
             />
           )}

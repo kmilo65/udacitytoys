@@ -3,7 +3,12 @@ import { Shelf } from "./Shelf";
 import { Link } from "react-router-dom";
 import { shelvesState } from "./ShelvesState";
 
-export const BooksShelft = ({ shelves, books, handleTargetBookChange }) => {
+export const BooksShelft = ({
+  shelves,
+  books,
+  handleTargetBookChange,
+  /*handleTargetSearchBookChange,**/
+}) => {
   if (shelvesState.length > 3) {
     shelvesState.pop();
   }
