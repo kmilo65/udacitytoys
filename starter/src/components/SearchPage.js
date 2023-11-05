@@ -13,9 +13,10 @@ export const SearchPage = ({ books, addBook }) => {
 
   useEffect(() => {
     const getSearchedBooks = () => {
+      updateQuery(query);
       const searchBooks = async () => {
-        console.log(query.length);
-        if (query.length > 0) {
+        /** console.log(query.length);**/
+        if (query?.length > 0) {
           const res = await BooksApi.search(query, maxResults);
 
           if (res.length > 0) {
@@ -23,22 +24,27 @@ export const SearchPage = ({ books, addBook }) => {
 
             const data = res?.filter((book) => {
               if (!idsData.includes(book.id.toLowerCase())) {
-                console.log(book.id.toLowerCase());
+                /**  console.log(book.id.toLowerCase());**/
                 return book;
               }
             });
 
             updateShelf(data);
+          } else {
+            setSearchedBooks([]);
           }
         }
       };
       searchBooks();
     };
     getSearchedBooks();
+    console.log("efect**");
+    console.log(searchedBooks);
   }, [query]);
 
   const updateQuery = (query) => {
-    setQuery(query.trim().toLowerCase());
+    setQuery(query.toLowerCase());
+    console.log("in update query");
     console.log(query);
   };
 
@@ -46,7 +52,7 @@ export const SearchPage = ({ books, addBook }) => {
     books.forEach((book) => {
       idsData.push(book.id.toLowerCase());
     });
-    console.log(idsData);
+    /**  console.log(idsData);**/
     return idsData;
   };
 
@@ -60,10 +66,11 @@ export const SearchPage = ({ books, addBook }) => {
 
       sbooks.filter((book) => {
         if (!idsData.includes(book.id.toLowerCase())) {
-          console.log(book.id.toLowerCase());
+          /**console.log(book.id.toLowerCase());**/
           return book;
         }
       });
+      console.log(sbooks);
       setSearchedBooks(sbooks);
     }
   };
